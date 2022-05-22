@@ -12,6 +12,8 @@ import questionary
 from pathlib import Path
 
 from qualifier.utils.fileio import load_csv
+from qualifier.utils.fileio import save_csv
+
 
 from qualifier.utils.calculators import (
     calculate_monthly_debt_ratio,
@@ -102,14 +104,25 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
     return bank_data_filtered
 
 
-def save_qualifying_loans(qualifying_loans):
+def save_qualifying_loans():
     """Saves the qualifying loans to a CSV file.
 
     Args:
         qualifying_loans (list of lists): The qualifying bank loans.
     """
     # @TODO: Complete the usability dialog for savings the CSV Files.
-    # YOUR CODE HERE!
+
+    save_copy = questionary.text("Would you like to save a copy of your qualifying loans? Yes/No").ask()
+    
+    if save_copy == "Yes":
+        print(f"You have chosen to save a copy of qualifying loans.")
+        csvpath = questionary.text("Enter a file path to to save (.csv) file:").ask()
+        csvpath = Path(csvpath)
+   
+    elif save_copy == "No":
+        sys.exit("You will be logged off, have a great day!")
+
+    return save_csv()
 
 
 def run():
